@@ -12,7 +12,7 @@ const LoginPage = (props) => {
     const password = passwordRef.current.value;
 
     axios
-      .post("http://localhost:8000/user/login", {
+      .post("https://gossup-backend.herokuapp.com/user/login", {
         email,
         password,
       })

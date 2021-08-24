@@ -13,7 +13,7 @@ const ChatroomPage = ({ match, socket }) => {
 
   async function getChatroomName(){
     axios
-    .get("http://localhost:8000/chatroom/get/" + chatroomId, {
+    .get("https://gossup-backend.herokuapp.com/chatroom/get/" + chatroomId, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("CC_Token"),
       },
@@ -32,7 +32,7 @@ const ChatroomPage = ({ match, socket }) => {
 
   async function loadMessages(){
     axios
-    .get("http://localhost:8000/chatroom/" + chatroomId, {
+    .get("https://gossup-backend.herokuapp.com/chatroom/" + chatroomId, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("CC_Token"),
       },

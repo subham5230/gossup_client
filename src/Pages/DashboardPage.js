@@ -10,7 +10,7 @@ const DashboardPage = (props) => {
     console.log("create chatroom: " + e);
     
     axios
-      .post("http://localhost:8000/chatroom", {
+      .post("https://gossup-backend.herokuapp.com/chatroom", {
         name: e,
       },
       {
@@ -28,7 +28,7 @@ const DashboardPage = (props) => {
 
   const getChatrooms = () => {
     axios
-      .get("http://localhost:8000/chatroom", {
+      .get("https://gossup-backend.herokuapp.com/chatroom", {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("CC_Token"),
         },
