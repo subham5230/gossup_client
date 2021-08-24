@@ -22,7 +22,6 @@ function App() {
 
       newSocket.on("disconnect", () => {
         setSocket(null);
-        setTimeout(setupSocket, 15000);
         makeToast("error", "Offline.");
       });
 
