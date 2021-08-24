@@ -22,12 +22,12 @@ function App() {
 
       newSocket.on("disconnect", () => {
         setSocket(null);
-        setTimeout(setupSocket, 3000);
-        makeToast("error", "Socket Disconnected!");
+        setTimeout(setupSocket, 15000);
+        makeToast("error", "Offline.");
       });
 
       newSocket.on("connect", () => {
-        makeToast("success", "Socket Connected!");
+        makeToast("success", "Online.");
       });
 
       setSocket(newSocket);
