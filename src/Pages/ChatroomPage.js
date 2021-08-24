@@ -9,7 +9,6 @@ const ChatroomPage = ({ match, socket }) => {
   const messageRef = React.useRef();
   const [userId, setUserId] = React.useState("");
   const [roomName, setRoomName] = React.useState("");
-  const [scrolled, setScrolled] = React.useState(false);
 
   function getChatroomName(){
     axios
@@ -50,17 +49,11 @@ const ChatroomPage = ({ match, socket }) => {
         chatroomId,
         message: messageRef.current.value,
       });
-      setScrolled(false);
       messageRef.current.value = "";
     }
   };
 
-  function updateScroll(){
-    if(!scrolled){
-      $("#chatContent").animate({ scrollTop: $('#chatContent').prop("scrollHeight")}, 1000);
-    }
-}
-
+ 
   React.useEffect(() => {
   if (socket) {
     socket.on("newMessage", (message) => {
@@ -79,14 +72,9 @@ const ChatroomPage = ({ match, socket }) => {
     getChatroomName();
   }, [])
 
-  $(".chatroomContent").on('scroll', function(){
-      setScrolled(true);
-  });
-
   React.useEffect(() => {
     loadMessages();
-    updateScroll();
-    
+  
   }, [messages]);
 
   React.useEffect(() => {
