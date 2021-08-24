@@ -11,7 +11,7 @@ const ChatroomPage = ({ match, socket }) => {
   const [roomName, setRoomName] = React.useState("");
   const [scrolled, setScrolled] = React.useState(false);
 
-  async function getChatroomName(){
+  function getChatroomName(){
     axios
     .get("https://gossup-backend.herokuapp.com/chatroom/get/" + chatroomId, {
       headers: {
@@ -28,9 +28,7 @@ const ChatroomPage = ({ match, socket }) => {
     });
   }
 
-  getChatroomName();
-
-  async function loadMessages(){
+  function loadMessages(){
     axios
     .get("https://gossup-backend.herokuapp.com/chatroom/" + chatroomId, {
       headers: {
@@ -63,26 +61,31 @@ const ChatroomPage = ({ match, socket }) => {
     }
 }
 
-  loadMessages();
-  updateScroll();
+  React.useEffect(() => {
+  if (socket) {
+    socket.on("newMessage", (message) => {
+      const newMessages = [...messages, message];
+      setMessages(newMessages);
+    });
+  }
+});
+  React.useEffect(() => {
+    
+    const token = localStorage.getItem("CC_Token");
+    if (token) {
+      const payload = JSON.parse(atob(token.split(".")[1]));
+      setUserId(payload.id);
+    }
+    getChatroomName();
+  }, [])
 
   $(".chatroomContent").on('scroll', function(){
       setScrolled(true);
   });
 
   React.useEffect(() => {
-    const token = localStorage.getItem("CC_Token");
-    if (token) {
-      const payload = JSON.parse(atob(token.split(".")[1]));
-      setUserId(payload.id);
-    }
-    if (socket) {
-      socket.on("newMessage", (message) => {
-        const newMessages = [...messages, message];
-        setMessages(newMessages);
-      });
-    }
-    //eslint-disable-next-line
+    loadMessages();
+    updateScroll();
     
   }, [messages]);
 
@@ -101,7 +104,6 @@ const ChatroomPage = ({ match, socket }) => {
         });
       }
     };
-    //eslint-disable-next-line
   }, []);
 
   $("#typeMessage").keyup(function(event) {
