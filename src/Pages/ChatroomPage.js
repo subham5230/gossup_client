@@ -116,7 +116,7 @@ const ChatroomPage = ({ match, socket }) => {
   return (
     
     <div className="chatroomPage bg-dark container-fluid d-grid justify-content-center">
-      <h2 className="text-center display-4 text-warning">{roomName}</h2>
+      <h2 className="text-center display-4 pt-5 text-warning">{roomName}</h2>
       <div className="chatroomSection bg-light rounded">
         <div id="chatContent" className="chatroomContent p-4">
           {messages.map((message, i) => (
